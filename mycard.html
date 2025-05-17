@@ -160,6 +160,7 @@
       cursor: pointer;
       font-weight: 600;
       transition: background 0.3s ease;
+      border: none;
     }
 
     .action-button:hover {
@@ -208,11 +209,11 @@
     <div class="profile-menu" onmouseenter="showSidebar()" onmouseleave="hideSidebar()">
       <div class="profile-icon"><i data-feather="user"></i></div>
       <div class="sidebar" id="sidebar">
-        <a href="https://zoomexa.github.io/pulseuser/dashboard.html" class="menu-item"><i data-lucide="layout-dashboard"></i>Dashboard</a>
-    <a href="https://zoomexa.github.io/pulseuser/mycard.html" class="menu-item"><i data-lucide="credit-card"></i>My Card</a>
-    <a href="https://zoomexa.github.io/pulseuser/hub.html" class="menu-item"><i data-lucide="briefcase"></i>Hub</a>
-    <a href="https://zoomexa.github.io/pulseuser/security.html" class="menu-item"><i data-lucide="shield-check"></i>Security</a>
-    <a href="https://zoomexa.github.io/pulseuser/idex.html" class="menu-item"><i data-lucide="log-out"></i>Logout</a>
+        <a href="https://zoomexa.github.io/pulseuser/dashboard.html"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+        <a href="https://zoomexa.github.io/pulseuser/mycard.html"><i data-lucide="credit-card"></i>My Card</a>
+        <a href="https://zoomexa.github.io/pulseuser/hub.html"><i data-lucide="briefcase"></i>Hub</a>
+        <a href="https://zoomexa.github.io/pulseuser/security.html"><i data-lucide="shield-check"></i>Security</a>
+        <a href="https://zoomexa.github.io/pulseuser/idex.html"><i data-lucide="log-out"></i>Logout</a>
       </div>
     </div>
     <div class="notification-icon" onclick="toggleNotification()">
@@ -251,15 +252,15 @@
   </div>
 
   <div class="actions">
-    <div  class="action-button"><i data-feather="arrow-down-circle"></i> 
-     <a href="https://zoomexa.github.io/pulseuser/deposit.html"> Deposit </a>
-    </div>
-    <div  class="action-button"><i data-feather="arrow-up-circle"></i>
-     <a href="https://zoomexa.github.io/pulseuser/withdraw.html"> Withdraw </a>
-    </div>
-    <div  class="action-button"><i data-feather="send"></i> 
-     <a href="https://zoomexa.github.io/pulseuser/send.html"> Send </a>
-    </div>
+    <button class="action-button" onclick="window.location.href='https://zoomexa.github.io/pulseuser/deposit.html'">
+      <i data-feather="arrow-down-circle"></i> Deposit
+    </button>
+    <button class="action-button" onclick="window.location.href='https://zoomexa.github.io/pulseuser/withdraw.html'">
+      <i data-feather="arrow-up-circle"></i> Withdraw
+    </button>
+    <button class="action-button" onclick="window.location.href='https://zoomexa.github.io/pulseuser/send.html'">
+      <i data-feather="send"></i> Send
+    </button>
   </div>
 
   <div class="transactions">
