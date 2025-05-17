@@ -18,13 +18,14 @@
       color: white;
       height: 100vh;
       overflow-x: hidden;
+      padding: 0 16px; /* Responsive padding for mobile */
     }
 
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 15px 20px;
+      padding: 15px 0;
       position: relative;
     }
 
@@ -82,7 +83,7 @@
     h1 {
       text-align: center;
       margin-top: 10px;
-      font-size: 22px;
+      font-size: 20px;
     }
 
     .swiper {
@@ -91,17 +92,16 @@
     }
 
     .swiper-slide {
-  background: #ff4d4f;
-  border-radius: 18px;
-  width: 280px; /* reduced from 320px */
-  margin: auto;
-  padding: 25px;
-  color: white;
-  min-height: 200px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-  position: relative;
-}
-
+      background: #ff4d4f;
+      border-radius: 18px;
+      width: 280px;
+      margin: auto;
+      padding: 25px;
+      color: white;
+      min-height: 200px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+      position: relative;
+    }
 
     .swiper-slide.platinum {
       background: linear-gradient(135deg, #b0b0b0, #e0e0e0);
@@ -109,12 +109,12 @@
     }
 
     .card-title {
-      font-size: 20px;
+      font-size: 18px;
       margin-bottom: 10px;
     }
 
     .card-number {
-      font-size: 18px;
+      font-size: 16px;
       letter-spacing: 2px;
       margin: 15px 0;
     }
@@ -123,21 +123,23 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     .card-footer img {
       width: 50px;
+      margin-top: 10px;
     }
 
     .apply-btn {
       display: block;
       margin: 0 auto;
       margin-top: 10px;
-      padding: 14px 30px;
+      padding: 14px 24px;
       background: linear-gradient(to right, #fff, #ffd6d6);
       border: none;
       border-radius: 30px;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: bold;
       color: #b3001b;
       cursor: pointer;
@@ -174,7 +176,7 @@
     .notification-popup {
       position: absolute;
       top: 50px;
-      right: 20px;
+      right: 0;
       background: #fff;
       color: #000;
       width: 250px;
@@ -196,6 +198,35 @@
     .notification-popup p {
       font-size: 14px;
       margin-bottom: 5px;
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 18px;
+      }
+
+      .apply-btn {
+        font-size: 14px;
+        padding: 12px 20px;
+      }
+
+      .card-title {
+        font-size: 16px;
+      }
+
+      .card-number {
+        font-size: 14px;
+      }
+
+      .swiper-slide {
+        width: 240px;
+        padding: 20px;
+      }
+
+      .notification-popup {
+        width: 90%;
+        right: 5%;
+      }
     }
   </style>
 </head>
@@ -270,13 +301,12 @@
     }
 
     new Swiper('.swiper', {
-  loop: true,
-  spaceBetween: 10, // reduced from 20
-  centeredSlides: true,
-  slidesPerView: 'auto',
-  grabCursor: true
-});
-
+      loop: true,
+      spaceBetween: 10,
+      centeredSlides: true,
+      slidesPerView: 'auto',
+      grabCursor: true
+    });
   </script>
 </body>
 </html>
