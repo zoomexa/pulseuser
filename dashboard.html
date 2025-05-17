@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PulsePay Dashboard</title>
+
+  <!-- Swiper CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #b3001b, #ff4d4f);
+      color: white;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      position: relative;
+    }
+
+    .icon-btn {
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+
+    .icon {
+      width: 28px;
+      height: 28px;
+    }
+
+    .profile-popup {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      width: 230px;
+      height: 100%;
+      background: #1c1c1c;
+      color: white;
+      transition: left 0.3s ease;
+      padding: 20px 15px;
+      z-index: 999;
+    }
+
+    .profile-popup.active {
+      left: 0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      color: #ccc;
+      text-decoration: none;
+      font-size: 16px;
+      border-radius: 8px;
+      transition: 0.2s;
+    }
+
+    .menu-item:hover {
+      background: #333;
+      color: white;
+    }
+
+    .menu-item svg {
+      margin-right: 10px;
+      width: 20px;
+      height: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 22px;
+    }
+
+    .swiper {
+      width: 100%;
+      padding: 40px 0;
+    }
+
+    .swiper-slide {
+  background: #ff4d4f;
+  border-radius: 18px;
+  width: 280px; /* reduced from 320px */
+  margin: auto;
+  padding: 25px;
+  color: white;
+  min-height: 200px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+
+    .swiper-slide.platinum {
+      background: linear-gradient(135deg, #b0b0b0, #e0e0e0);
+      color: #222;
+    }
+
+    .card-title {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .card-number {
+      font-size: 18px;
+      letter-spacing: 2px;
+      margin: 15px 0;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-footer img {
+      width: 50px;
+    }
+
+    .apply-btn {
+      display: block;
+      margin: 0 auto;
+      margin-top: 10px;
+      padding: 14px 30px;
+      background: linear-gradient(to right, #fff, #ffd6d6);
+      border: none;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #b3001b;
+      cursor: pointer;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .apply-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .apply-btn::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.5) 10%, transparent 70%);
+      animation: shine 2.5s infinite linear;
+      z-index: -1;
+    }
+
+    @keyframes shine {
+      0% { transform: translate(-100%, -100%) rotate(45deg); }
+      100% { transform: translate(100%, 100%) rotate(45deg); }
+    }
+
+    .notification-popup {
+      position: absolute;
+      top: 50px;
+      right: 20px;
+      background: #fff;
+      color: #000;
+      width: 250px;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 999;
+    }
+
+    .notification-popup.active {
+      display: block;
+    }
+
+    .notification-popup h4 {
+      margin-bottom: 10px;
+    }
+
+    .notification-popup p {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Side Profile Popup -->
+  <div class="profile-popup" id="profileMenu">
+    <h2>PulsePay</h2>
+    <a href="#" class="menu-item"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+    <a href="#" class="menu-item"><i data-lucide="credit-card"></i>My Card</a>
+    <a href="#" class="menu-item"><i data-lucide="briefcase"></i>Hub</a>
+    <a href="#" class="menu-item"><i data-lucide="shield-check"></i>Security</a>
+    <a href="#" class="menu-item"><i data-lucide="log-out"></i>Logout</a>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <button class="icon-btn" onclick="toggleProfileMenu()">
+      <i data-lucide="user"></i>
+    </button>
+
+    <button class="icon-btn" onclick="toggleNotification()">
+      <i data-lucide="bell"></i>
+    </button>
+
+    <div class="notification-popup" id="notificationPopup">
+      <h4>Notifications</h4>
+      <p>Your Pulse Card has been shipped.</p>
+      <p>New feature: Dual currency now available!</p>
+    </div>
+  </header>
+
+  <h1>Your Pulse Cards</h1>
+
+  <!-- Card Swiper -->
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide">
+        <div class="card-title">Pulse Basic Card</div>
+        <div class="card-number">**** **** **** 1234</div>
+        <div class="card-footer">
+          <span>Dual Currency</span>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard">
+        </div>
+      </div>
+
+      <div class="swiper-slide platinum">
+        <div class="card-title">Pulse Platinum Card</div>
+        <div class="card-number">**** **** **** 5678</div>
+        <div class="card-footer">
+          <span>Dual Currency</span>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Glossy Apply Button -->
+  <button class="apply-btn"><i data-lucide="plus-circle"></i>Apply for Card</button>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script>
+    lucide.createIcons();
+
+    function toggleProfileMenu() {
+      document.getElementById('profileMenu').classList.toggle('active');
+    }
+
+    function toggleNotification() {
+      document.getElementById('notificationPopup').classList.toggle('active');
+    }
+
+    new Swiper('.swiper', {
+  loop: true,
+  spaceBetween: 10, // reduced from 20
+  centeredSlides: true,
+  slidesPerView: 'auto',
+  grabCursor: true
+});
+
+  </script>
+</body>
+</html>
