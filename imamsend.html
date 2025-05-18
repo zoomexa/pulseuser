@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PulsePay - Send USD</title>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: #fdf0f1;
+      padding: 30px;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      position: relative;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    .profile-menu {
+      position: relative;
+    }
+
+    .profile-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #b3001b;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      cursor: pointer;
+    }
+
+    .sidebar {
+      position: absolute;
+      top: 45px;
+      left: 0;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      display: none;
+      flex-direction: column;
+      width: 180px;
+      z-index: 10;
+    }
+
+    .sidebar a {
+      padding: 10px 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #333;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background-color: #ffe6e6;
+    }
+
+    .notification-icon {
+      font-size: 20px;
+      cursor: pointer;
+      color: #b3001b;
+      position: relative;
+    }
+
+    #notificationBox {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 40px;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+      width: 240px;
+      padding: 12px;
+      z-index: 20;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 28px;
+      color: #b3001b;
+    }
+
+    .send-form {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .send-form label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .send-form input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .send-form button {
+      width: 100%;
+      background: linear-gradient(145deg, #ff4d4f, #b3001b);
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .send-form button:hover {
+      background: #a00018;
+    }
+
+    .success-message {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      background: #e6ffed;
+      color: #007a34;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Header -->
+  <div class="header">
+    <div class="profile-menu" onmouseenter="showSidebar()" onmouseleave="hideSidebar()">
+      <div class="profile-icon"><i data-feather="user"></i></div>
+      <div class="sidebar" id="sidebar">
+        <a class="menu-item" href="https://zoomexa.github.io/pulseuser/imamdash.html"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/imamcard.html"><i data-lucide="credit-card"></i>My Card</a>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/imamhub.html"><i data-lucide="briefcase"></i>Hub</a>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/imamsecurity.html"><i data-lucide="shield-check"></i>Security</a>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/idex.html"><i data-lucide="log-out"></i>Logout</a>
+      </div>
+    </div>
+    <div class="notification-icon" onclick="toggleNotification()">
+      <i data-feather="bell"></i>
+      <div id="notificationBox">
+        <div style="font-weight: 600; margin-bottom: 10px; color: #b3001b;">Notifications</div>
+        <div style="font-size: 14px; color: #333; margin-bottom: 8px;">• Transfer limit increased</div>
+        <div style="font-size: 14px; color: #333;">• New feature added to PulsePay</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <h1>Send USD</h1>
+
+  <div class="send-form">
+    <label for="recipient">Recipient Username or Email</label>
+    <input type="text" id="recipient" placeholder="e.g., user@example.com" required />
+
+    <label for="amount">Amount (USD)</label>
+    <input type="number" id="amount" placeholder="Enter amount" required />
+
+    <label for="pin">Your PIN</label>
+    <input type="password" id="pin" placeholder="Enter your 4-digit PIN" required />
+
+    <button onclick="sendMoney()">Send Now</button>
+
+    <div class="success-message" id="successMsg">✅ USD successfully sent!</div>
+  </div>
+</div>
+
+<script>
+  feather.replace();
+
+  function showSidebar() {
+    document.getElementById('sidebar').style.display = 'flex';
+  }
+
+  function hideSidebar() {
+    document.getElementById('sidebar').style.display = 'none';
+  }
+
+  function toggleNotification() {
+    const box = document.getElementById('notificationBox');
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  }
+
+  function sendMoney() {
+    const recipient = document.getElementById('recipient').value.trim();
+    const amount = document.getElementById('amount').value;
+    const pin = document.getElementById('pin').value;
+
+    if (!recipient || !amount || !pin) {
+      alert("Please fill all fields.");
+      return;
+    }
+
+    document.getElementById('successMsg').style.display = 'block';
+    setTimeout(() => {
+      document.getElementById('successMsg').style.display = 'none';
+    }, 5000);
+  }
+</script>
+
+</body>
+</html>
