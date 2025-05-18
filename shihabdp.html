@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PulsePay Deposit</title>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fdf0f1;
+      margin: 0;
+      padding: 0;
+    }
+
+    .top-bar {
+      background: linear-gradient(to right, #b3001b, #ff4d4d);
+      color: white;
+      padding: 16px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .top-bar h2 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .profile-menu {
+      position: relative;
+    }
+
+    .profile-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #b3001b;
+      cursor: pointer;
+    }
+
+    .sidebar {
+      position: absolute;
+      top: 48px;
+      right: 0; /* Changed from left: 0 to right: 0 */
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: none;
+      flex-direction: column;
+      width: 180px;
+      z-index: 10;
+    }
+
+    .sidebar a {
+      padding: 12px 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #333;
+      text-decoration: none;
+      font-size: 15px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .sidebar a:hover {
+      background-color: #fff2f2;
+    }
+
+    .notification-container {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .notification-icon {
+      font-size: 22px;
+      color: white;
+    }
+
+    #notificationBox {
+      display: none;
+      position: absolute;
+      right: 0;
+      top: 48px;
+      background: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-radius: 10px;
+      width: 240px;
+      padding: 12px;
+      z-index: 20;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      text-align: center;
+      color: #b3001b;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .form-group select,
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    .wallet-address {
+      background: #fff4f4;
+      border: 1px solid #ffcccc;
+      padding: 15px;
+      border-radius: 8px;
+      font-weight: 500;
+      color: #b3001b;
+      display: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(to right, #b3001b, #ff4d4d);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      opacity: 0.95;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 50;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .modal-content h2 {
+      color: #b3001b;
+      margin-bottom: 15px;
+    }
+
+    .modal-content p {
+      margin-bottom: 20px;
+    }
+
+    .close-btn {
+      padding: 10px 20px;
+      background: #b3001b;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close-btn:hover {
+      background: #990017;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top Bar -->
+<div class="top-bar">
+  <h2>PulsePay</h2>
+  <div style="display: flex; align-items: center; gap: 16px;">
+    <div class="notification-container" onclick="toggleNotification()">
+      <i data-feather="bell" class="notification-icon"></i>
+      <div id="notificationBox">
+        <div style="font-weight: 600; margin-bottom: 10px; color: #b3001b;">Notifications</div>
+        <div style="font-size: 14px; color: #333;">• No new updates</div>
+      </div>
+    </div>
+    <div class="profile-menu">
+      <div class="profile-icon" onclick="toggleSidebar()">
+        <i data-feather="user"></i>
+      </div>
+      <div class="sidebar" id="sidebar">
+        <a class="menu-item" href="https://zoomexa.github.io/pulseuser/shihabdash.html"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/shihabcard.html"><i data-lucide="credit-card"></i>My Card</a>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/shihabhub.html"><i data-lucide="briefcase"></i>Hub</a>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/shihabsecurity.html"><i data-lucide="shield-check"></i>Security</a>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/idex.html"><i data-lucide="log-out"></i>Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+  <h1>Deposit Funds</h1>
+
+  <div class="form-group">
+    <label><i data-feather="credit-card"></i> Select Crypto Method</label>
+    <select id="cryptoSelect" onchange="updateWallet()">
+      <option value="btc">Bitcoin (BTC)</option>
+      <option value="usdt">Tether (USDT)</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label><i data-feather="dollar-sign"></i> Amount in USD</label>
+    <input type="number" placeholder="Enter amount in USD" required />
+  </div>
+
+  <div class="wallet-address" id="btcWallet">
+    <i data-feather="link"></i> BTC Wallet Address: <br> <span>1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2</span>
+  </div>
+  <div class="wallet-address" id="usdtWallet">
+    <i data-feather="link"></i> USDT Wallet Address: <br> <span>TG3xyzxyzabc1234EFGH56789uiopQWERTY</span>
+  </div>
+
+  <button class="submit-btn" onclick="showModal()">Payment Done</button>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="depositModal">
+  <div class="modal-content">
+    <h2>Deposit Pending</h2>
+    <p>Your deposit is pending. Please contact our support to confirm your deposit.</p>
+    <button class="close-btn" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<script>
+  feather.replace();
+
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    sidebar.style.display = sidebar.style.display === 'flex' ? 'none' : 'flex';
+  }
+
+  function toggleNotification() {
+    const box = document.getElementById('notificationBox');
+    box.style.display = box.style.display === 'block' ? 'none' : 'block';
+  }
+
+  function showModal() {
+    document.getElementById('depositModal').style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('depositModal').style.display = 'none';
+  }
+
+  function updateWallet() {
+    const value = document.getElementById('cryptoSelect').value;
+    document.getElementById('btcWallet').style.display = value === 'btc' ? 'block' : 'none';
+    document.getElementById('usdtWallet').style.display = value === 'usdt' ? 'block' : 'none';
+  }
+
+  window.onload = updateWallet;
+</script>
+
+</body>
+</html>
