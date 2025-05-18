@@ -15,7 +15,7 @@
 
     body {
       background: #fdf0f1;
-      padding: 30px;
+      padding: 30px 15px;
       color: #333;
     }
 
@@ -145,10 +145,11 @@
       margin: 30px auto;
       max-width: 600px;
       gap: 20px;
+      flex-wrap: wrap;
     }
 
     .action-button {
-      flex: 1;
+      flex: 1 1 30%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -160,6 +161,7 @@
       cursor: pointer;
       font-weight: 600;
       transition: background 0.3s ease;
+      min-width: 100px;
     }
 
     .action-button:hover {
@@ -199,20 +201,66 @@
     .transaction-table tr:last-child td {
       border-bottom: none;
     }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 20px 10px;
+      }
+
+      .header {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+
+      .card-preview {
+        padding: 20px 15px;
+        height: auto;
+      }
+
+      .card-number {
+        font-size: 20px;
+      }
+
+      .card-info {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .actions {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .action-button {
+        flex: 1 1 100%;
+        width: 100%;
+      }
+
+      .transaction-table th,
+      .transaction-table td {
+        font-size: 13px;
+        padding: 10px;
+      }
+
+      .transactions h3 {
+        font-size: 18px;
+      }
+    }
   </style>
 </head>
 <body>
 
 <div class="container">
+  <!-- Header -->
   <div class="header">
     <div class="profile-menu" onmouseenter="showSidebar()" onmouseleave="hideSidebar()">
       <div class="profile-icon"><i data-feather="user"></i></div>
       <div class="sidebar" id="sidebar">
-       <a href="https://zoomexa.github.io/pulseuser/shawondash.html"><i data-lucide="layout-dashboard"></i>Dashboard</a>
-        <a href="https://zoomexa.github.io/pulseuser/shawoncard.html"><i data-lucide="credit-card"></i>My Card</a>
-        <a href="https://zoomexa.github.io/pulseuser/hub.html"><i data-lucide="briefcase"></i>Hub</a>
-        <a href="https://zoomexa.github.io/pulseuser/shawonsecurity.html"><i data-lucide="shield-check"></i>Security</a>
-        <a href="https://zoomexa.github.io/pulseuser/idex.html"><i data-lucide="log-out"></i>Logout</a>
+        <a href="#"><i data-feather="layout"></i>Dashboard</a>
+        <a href="#"><i data-feather="credit-card"></i>My Card</a>
+        <a href="#"><i data-feather="briefcase"></i>Hub</a>
+        <a href="#"><i data-feather="shield"></i>Security</a>
+        <a href="#"><i data-feather="log-out"></i>Logout</a>
       </div>
     </div>
     <div class="notification-icon" onclick="toggleNotification()">
@@ -225,6 +273,7 @@
     </div>
   </div>
 
+  <!-- Card Preview -->
   <div class="card-preview">
     <button class="toggle-btn" onclick="toggleVisibility()">Show</button>
     <div class="card-name">Pulse Card</div>
@@ -238,6 +287,7 @@
     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Mastercard-logo.png/320px-Mastercard-logo.png" class="mastercard-logo" alt="Mastercard Logo" />
   </div>
 
+  <!-- Balance Card -->
   <div style="max-width: 600px; margin: 40px auto 10px;">
     <div style="background: white; border-radius: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); padding: 20px 25px; display: flex; justify-content: space-between; align-items: center;">
       <div>
@@ -250,6 +300,7 @@
     </div>
   </div>
 
+  <!-- Action Buttons -->
   <div class="actions">
     <button class="action-button" onclick="window.location.href='https://zoomexa.github.io/pulseuser/deposit.html'">
       <i data-feather="arrow-down-circle"></i> Deposit
@@ -262,7 +313,7 @@
     </button>
   </div>
 
-
+  <!-- Transactions Table -->
   <div class="transactions">
     <h3>Recent Transactions</h3>
     <table class="transaction-table">
@@ -275,7 +326,10 @@
         </tr>
       </thead>
       <tbody>
-       
+        <!-- Add your rows here -->
+        <tr>
+          
+        </tr>
       </tbody>
     </table>
   </div>
@@ -285,11 +339,9 @@
   document.addEventListener('DOMContentLoaded', () => {
     feather.replace();
 
-    const notificationIcon = document.querySelector('.notification-icon');
-    const notificationBox = document.getElementById('notificationBox');
-
     window.toggleNotification = function () {
-      notificationBox.style.display = notificationBox.style.display === 'none' ? 'block' : 'none';
+      const box = document.getElementById('notificationBox');
+      box.style.display = box.style.display === 'none' ? 'block' : 'none';
     };
   });
 
