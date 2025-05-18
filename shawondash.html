@@ -196,23 +196,34 @@
       font-size: 14px;
       margin-bottom: 5px;
     }
+
+    @media (max-width: 768px) {
+      .profile-popup {
+        width: 200px;
+      }
+    }
   </style>
 </head>
 <body>
 
   <!-- Side Profile Popup -->
   <div class="profile-popup" id="profileMenu">
-    <h2>PulsePay</h2>
-     <a href="https://zoomexa.github.io/pulseuser/shawondash.html"><i data-lucide="layout-dashboard"></i>Dashboard</a>
-        <a href="https://zoomexa.github.io/pulseuser/shawoncard.html"><i data-lucide="credit-card"></i>My Card</a>
-        <a href="https://zoomexa.github.io/pulseuser/hub.html"><i data-lucide="briefcase"></i>Hub</a>
-        <a href="https://zoomexa.github.io/pulseuser/shawonsecurity.html"><i data-lucide="shield-check"></i>Security</a>
-        <a href="https://zoomexa.github.io/pulseuser/idex.html"><i data-lucide="log-out"></i>Logout</a>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <h2>PulsePay</h2>
+      <button class="icon-btn" onclick="toggleProfileMenu()" style="color: white;">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/shawondash.html"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/shawoncard.html"><i data-lucide="credit-card"></i>My Card</a>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/hub.html"><i data-lucide="briefcase"></i>Hub</a>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/shawonsecurity.html"><i data-lucide="shield-check"></i>Security</a>
+    <a class="menu-item" href="https://zoomexa.github.io/pulseuser/idex.html"><i data-lucide="log-out"></i>Logout</a>
   </div>
 
   <!-- Header -->
   <header>
-    <button class="icon-btn" onclick="toggleProfileMenu()">
+    <button class="icon-btn" onclick="toggleProfileMenu()" id="profileToggleBtn">
       <i data-lucide="user"></i>
     </button>
 
@@ -316,6 +327,15 @@
       centeredSlides: true,
       slidesPerView: 'auto',
       grabCursor: true
+    });
+
+    // Close sidebar if clicking outside
+    document.addEventListener('click', function(event) {
+      const sidebar = document.getElementById('profileMenu');
+      const button = document.getElementById('profileToggleBtn');
+      if (!sidebar.contains(event.target) && !button.contains(event.target)) {
+        sidebar.classList.remove('active');
+      }
     });
   </script>
 </body>
