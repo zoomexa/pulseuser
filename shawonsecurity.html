@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -174,11 +173,11 @@
     <div class="profile-menu" onmouseenter="showSidebar()" onmouseleave="hideSidebar()">
       <div class="profile-icon"><i data-feather="user"></i></div>
       <div class="sidebar" id="sidebar">
-         <a href="https://zoomexa.github.io/pulseuser/dashboard.html" class="menu-item"><i data-lucide="layout-dashboard"></i>Dashboard</a>
-    <a href="https://zoomexa.github.io/pulseuser/mycard.html" class="menu-item"><i data-lucide="credit-card"></i>My Card</a>
-    <a href="https://zoomexa.github.io/pulseuser/hub.html" class="menu-item"><i data-lucide="briefcase"></i>Hub</a>
-    <a href="https://zoomexa.github.io/pulseuser/security.html" class="menu-item"><i data-lucide="shield-check"></i>Security</a>
-    <a href="https://zoomexa.github.io/pulseuser/idex.html" class="menu-item"><i data-lucide="log-out"></i>Logout</a>
+         <a href="https://zoomexa.github.io/pulseuser/shawondash.html" class="menu-item"><i data-lucide="layout-dashboard"></i>Dashboard</a>
+         <a href="https://zoomexa.github.io/pulseuser/shawoncard.html" class="menu-item"><i data-lucide="credit-card"></i>My Card</a>
+         <a href="https://zoomexa.github.io/pulseuser/hub.html" class="menu-item"><i data-lucide="briefcase"></i>Hub</a>
+         <a href="https://zoomexa.github.io/pulseuser/shawonsecurity.html" class="menu-item"><i data-lucide="shield-check"></i>Security</a>
+         <a href="https://zoomexa.github.io/pulseuser/idex.html" class="menu-item"><i data-lucide="log-out"></i>Logout</a>
       </div>
     </div>
     <div class="notification-icon" onclick="toggleNotification()">
@@ -186,7 +185,6 @@
       <div id="notificationBox">
         <div style="font-weight: 600; margin-bottom: 10px; color: #b3001b;">Notifications</div>
         <div style="font-size: 14px; color: #333; margin-bottom: 8px;">• Welcome to Pulse Security</div>
-        
       </div>
     </div>
   </div>
@@ -220,7 +218,7 @@
       <label>New Email</label>
       <input type="email" placeholder="Enter new email" />
     </div>
-    <button>Update Email</button>
+    <button id="updateEmailBtn">Update Email</button>
   </div>
 
   <!-- Change Password -->
@@ -234,7 +232,7 @@
       <label>New Password</label>
       <input type="password" placeholder="New password" />
     </div>
-    <button>Update Password</button>
+    <button id="updatePasswordBtn">Update Password</button>
   </div>
 
   <!-- Change PIN -->
@@ -248,7 +246,7 @@
       <label>New PIN</label>
       <input type="password" placeholder="****" />
     </div>
-    <button>Update PIN</button>
+    <button id="updatePinBtn">Update PIN</button>
   </div>
 
   <!-- Delete Account -->
@@ -272,8 +270,21 @@
 
   function toggleNotification() {
     const box = document.getElementById('notificationBox');
-    box.style.display = box.style.display === 'none' ? 'block': 'none'; 
+    box.style.display = box.style.display === 'none' ? 'block' : 'none'; 
   }
+
+  // Success messages
+  document.getElementById("updateEmailBtn").addEventListener("click", function () {
+    alert("Email updated successfully!");
+  });
+
+  document.getElementById("updatePasswordBtn").addEventListener("click", function () {
+    alert("Password updated successfully!");
+  });
+
+  document.getElementById("updatePinBtn").addEventListener("click", function () {
+    alert("PIN updated successfully!");
+  });
 </script>
 
 </body>
