@@ -11,7 +11,7 @@
   <div class="bg-white p-8 rounded-2xl shadow-2xl max-w-sm w-full">
     <h2 class="text-3xl font-bold text-center text-red-600 mb-6">PulsePay Login</h2>
     
-    <form action="#" method="POST" class="space-y-4">
+    <form id="loginForm" class="space-y-4">
       <div>
         <label for="email" class="block text-sm font-semibold text-gray-700">Email</label>
         <input type="email" id="email" name="email" required class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400">
@@ -25,10 +25,36 @@
       <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-2 rounded-lg transition duration-200">
         Login
       </button>
-    </form>
 
-   
+      <p id="errorMsg" class="text-sm text-red-600 mt-2 hidden">Invalid email or password.</p>
+    </form>
   </div>
+
+  <script>
+    const validUsers = [
+      { email: "admin@pulsepay.com", password: "admin123", dashboard: "https://zoomexa.github.io/pulseuser/dashboard.html" },
+      { email: "user@pulsepay.com", password: "user123", dashboard: "user-dashboard.html" },
+      { email: "test@pulsepay.com", password: "test456", dashboard: "test-dashboard.html" }
+    ];
+
+    document.getElementById("loginForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const errorMsg = document.getElementById("errorMsg");
+
+      const matchedUser = validUsers.find(user => user.email === email && user.password === password);
+
+      if (matchedUser) {
+        // ✅ Redirect to their specific dashboard
+        window.location.href = matchedUser.dashboard;
+      } else {
+        // ❌ Show error message
+        errorMsg.classList.remove("hidden");
+      }
+    });
+  </script>
 
 </body>
 </html>
